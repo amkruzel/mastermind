@@ -1,0 +1,1 @@
+This is a project to make a mastermind game to be played on the command line.
