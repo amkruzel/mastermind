@@ -3,5 +3,5 @@
 # info about game
 
 class Game
-  COLORS = %w(red yellow green blue purple orange)
+  # COLORS = %w(red yellow green blue purple orange)
 end

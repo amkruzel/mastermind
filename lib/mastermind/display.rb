@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # texts display
-module Display
+module DisplayBoard
   def display_board(board)
     puts "\n"
     board.each do |inner|
