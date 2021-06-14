@@ -5,6 +5,7 @@ require './mastermind/game_prompts'
 require './mastermind/board'
 require './mastermind/display'
 require './mastermind/game_logic'
+require 'pry'
 
 # main program file for mastermind
 
@@ -49,6 +50,7 @@ class Game < Board
     guess_colors
     # display_board(@board)
     pick_colors # Will return @computer_colors, an array of four letters representing the colors that need to be guessed
+    @@round_no = 0
   end
 
   def play_round
@@ -56,10 +58,20 @@ class Game < Board
 
     evaluate_guesses # Does not return, but evaluates @correct_color_and_position and @correct_color to be integers
 
-    @board = add_guesses_and_results(@board, @cur_guesses, @@round_no) # Returns new board
+    @board[@@round_no] = add_guesses_and_results(@board[@@round_no], @cur_guesses) # Returns new board
 
     display_board(@board)
+
+    if check_if_won || check_if_lost
+      game_over
+      break
+    end
+
     @@round_no += 1
+  end
+
+  def game_over
+
   end
 end
 

@@ -21,4 +21,12 @@ module GamePrompts
     puts "Options are: 'r' (#{'red'.red}), 'o' (#{'orange'.yellow}), 'g' (#{'green'.green}), 'b' (#{'blue'.blue}), 'p' (#{'purple'.magenta}), or 'y' (#{'yellow'.light_yellow})"
     sleep(2)
   end
+
+  def check_if_won
+    puts 'You won!' && true if @cur_guesses == @computer_colors
+  end
+
+  def check_if_lost(round)
+    puts 'You lost' && true if round == 11
+  end
 end
