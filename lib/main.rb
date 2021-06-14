@@ -4,9 +4,6 @@ require 'colorize'
 
 # main program file for mastermind
 
-puts '- Welcome to mastermind -'
-puts 'The goal of the game is to guess the correct colors etc...'
-
 board_arr = Array.new(12, Array.new(4, 'o'.black.on_white))
 colorize_colors = {r: 'red', o: 'yellow', g: 'green', b: 'blue', p: 'magenta', y: 'light_yellow'}
 
