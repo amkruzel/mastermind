@@ -44,7 +44,10 @@ class Game < Board
     game_rules
     guess_colors
     display_board(@board)
-  end 
+  end
+
+  def play_round
+    
 end
 
 game = Game.new
