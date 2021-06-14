@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# prompts to the player
+# This module includes prompts to the user. It does not check for the validity of the responses
 module GamePrompts
   def game_welcome
     puts "\n- Time to play Mastermind -"

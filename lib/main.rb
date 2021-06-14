@@ -4,6 +4,7 @@ require 'colorize'
 require './mastermind/game_prompts'
 require './mastermind/board'
 require './mastermind/display'
+require './mastermind/game_logic'
 
 # main program file for mastermind
 
@@ -37,17 +38,30 @@ require './mastermind/display'
 class Game < Board
   include GamePrompts
   include DisplayBoard
+  include GameLogic
+
+  @@round_no = 0
 
   def initialize
     super
     game_welcome
     game_rules
     guess_colors
-    display_board(@board)
+    # display_board(@board)
+    pick_colors # Will return @computer_colors, an array of four letters representing the colors that need to be guessed
   end
 
   def play_round
-    
+    collect_guesses # Will return @cur_guesses, an array with four letters representing player guesses
+
+    evaluate_guesses # Does not return, but evaluates @correct_color_and_position and @correct_color to be integers
+
+    @board = add_guesses_and_results(@board, @cur_guesses, @@round_no) # Returns new board
+
+    display_board(@board)
+    @@round_no += 1
+  end
 end
 
 game = Game.new
+game.play_round
