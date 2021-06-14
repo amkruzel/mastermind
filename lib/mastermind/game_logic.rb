@@ -9,7 +9,7 @@ module GameLogic
   def pick_colors
     @computer_colors = []
     4.times do
-      @computer_colors.push(COLOR_LETTERS[rand(1..6)])
+      @computer_colors.push(COLOR_LETTERS[rand(0..5)])
     end
     @computer_colors
   end
@@ -30,7 +30,9 @@ module GameLogic
   def evaluate_guesses
     @correct_color_and_position = 0
     @correct_color = 0
-    tmp = @computer_colors
+    tmp = @computer_colors.dup
+    p tmp
+
 
     4.times do |t|
       # If guess is exactly correct, add 1 to correct_color_and_position and go to next loop
@@ -42,12 +44,20 @@ module GameLogic
 
     4.times do |t|
       # Check if color is correct but in wrong position
+
       if @computer_colors.include?(@cur_guesses[t])
         @correct_color += 1
-        @computer_colors.delete(@cur_guesses[t])
+        @computer_colors.delete_at(@computer_colors.index(@cur_guesses[t]))
       end
     end
+    @computer_colors = tmp.dup
+  end
 
-    @computer_colors = tmp
+  def game_won?
+    true if @cur_guesses == @computer_colors
+  end
+
+  def game_over?(round)
+    true if round == 12
   end
 end
