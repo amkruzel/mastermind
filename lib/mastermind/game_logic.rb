@@ -27,37 +27,41 @@ module GameLogic
     @cur_guesses
   end
 
-  def evaluate_guesses
+  def evaluate_guesses(guesses, answers)
     @correct_color_and_position = 0
     @correct_color = 0
-    tmp = @computer_colors.dup
-    p tmp
+    tmp_answers = answers.dup
+    tmp_guesses = guesses.dup
+    deletes = []
 
-
-    4.times do |t|
+    tmp_guesses.each_with_index do |color, t|
       # If guess is exactly correct, add 1 to correct_color_and_position and go to next loop
-      if @computer_colors[t] == @cur_guesses[t]
+      if tmp_answers[t] == color
         @correct_color_and_position += 1
-        @computer_colors.shift
+        deletes.push(color)
       end
+      # Delete exact correct guesses form both arrays so they are not counted twice
+      deletes.each do |clr|
+        tmp_answers.delete_at(tmp_answers.index(clr))
+        tmp_guesses.delete_at(tmp_guesses.index(clr))
+      end
+      deletes.clear
     end
 
-    4.times do |t|
+    tmp_guesses.each_with_index do |color, t|
       # Check if color is correct but in wrong position
-
-      if @computer_colors.include?(@cur_guesses[t])
+      if tmp_answers.include?(color)
         @correct_color += 1
-        @computer_colors.delete_at(@computer_colors.index(@cur_guesses[t]))
+        tmp_answers[tmp_answers.index(color)] = ''
       end
     end
-    @computer_colors = tmp.dup
   end
 
-  def game_won?
-    true if @cur_guesses == @computer_colors
+  def game_won?(guess, correct)
+    guess == correct
   end
 
-  def game_over?(round)
-    true if round == 12
+  def game_lost?(round)
+    round == 12
   end
 end

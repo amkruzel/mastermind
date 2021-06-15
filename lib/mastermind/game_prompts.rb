@@ -23,11 +23,13 @@ module GamePrompts
   end
 
   def won
-    'You won!'
+    puts 'You won!'
+    true
   end
 
-  def lost
-    'You lost :('
+  def lost(pattern)
+    puts "You lost :(\nThe answer was #{pattern}"
+    true
   end
 
   def play_again?
