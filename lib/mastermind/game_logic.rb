@@ -40,13 +40,14 @@ module GameLogic
         @correct_color_and_position += 1
         deletes.push(color)
       end
-      # Delete exact correct guesses form both arrays so they are not counted twice
-      deletes.each do |clr|
-        tmp_answers.delete_at(tmp_answers.index(clr))
-        tmp_guesses.delete_at(tmp_guesses.index(clr))
-      end
-      deletes.clear
     end
+
+    # Delete exact correct guesses form both arrays so they are not counted twice
+    deletes.each do |clr|
+      tmp_answers.delete_at(tmp_answers.index(clr))
+      tmp_guesses.delete_at(tmp_guesses.index(clr))
+    end
+    deletes.clear
 
     tmp_guesses.each_with_index do |color, t|
       # Check if color is correct but in wrong position
@@ -58,10 +59,26 @@ module GameLogic
   end
 
   def game_won?(guess, correct)
-    guess == correct
+    if guess == correct
+      won
+      true
+    end
   end
 
   def game_lost?(round)
-    round == 12
+    if round == 12
+      lost(@computer_colors)
+      true
+    end
+  end
+
+  def game_over
+    @computer_colors.clear
+    @board.clear
+    @round_no = 0
+    pick_colors
+    @board = Array.new(12) { Array.new(4, 'o'.white) }
+
+    play_again?
   end
 end

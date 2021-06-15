@@ -39,15 +39,16 @@ class Game < Board
     @round_no += 1
   end
 
-  def end_game
-    won if game_won?(@cur_guesses, @computer_colors)
-    lost if game_lost?(@round_no)
+  def play_game
+    play_round until game_over?
+    play_game if game_over || exit
+  end
+
+  def game_over?
+    true if game_won?(@cur_guesses, @computer_colors) || game_lost?(@round_no)
   end
 end
 
 game = Game.new
 
-loop do
-  game.play_round
-  if game.end_game && game
-end
+game.play_game
